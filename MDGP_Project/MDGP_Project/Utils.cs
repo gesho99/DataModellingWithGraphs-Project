@@ -1,8 +1,4 @@
-﻿using Gexf;
-using Gexf.Visualization;
-using System.Drawing;
-
-namespace MDGP_Project
+﻿namespace MDGP_Project
 {
     public static class Utils
     {
@@ -48,51 +44,6 @@ namespace MDGP_Project
             }
 
             return true;
-        }
-
-        public static void GenerateVisualization(Dictionary<int, List<int>> graph, string path)
-        {
-            var gexf = new GexfDocument();
-            gexf.Meta.LastModified = DateTimeOffset.Now;
-            gexf.Meta.Creator = Environment.UserName;
-            gexf.Graph.IdType = GexfIdType.Integer;
-            gexf.Graph.Mode = GexfModeType.Static;
-            gexf.Graph.DefaultedEdgeType = GexfEdgeType.Directed;
-
-            gexf.Graph.Nodes.AddRange(graph.Keys.Select(key =>
-                new GexfNode(key)
-                {
-                    Label = key.ToString()
-                }));
-
-            foreach (var item in gexf.Graph.Nodes)
-            {
-                if (IsPrime(int.Parse(item.Id.ToString())))
-                {
-                    item.Color(Color.Green);
-                }
-                else
-                {
-                    item.Color(Color.Red);
-                }
-            }
-
-            int counter = 1;
-
-            foreach (int node in graph.Keys)
-            {
-                if (graph[node] != null)
-                {
-                    foreach (int connection in graph[node])
-                    {
-                        gexf.Graph.Edges.AddRange(new GexfEdge(counter, node, connection));
-
-                        counter++;
-                    }
-                }
-            }
-
-            gexf.Save(path);
         }
     }
 }
