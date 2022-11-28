@@ -16,12 +16,12 @@
 
         public void AddNodes(IEnumerable<GexfNode> nodes)
         {
-            gexfDocument.Graph.Nodes.AddRange(nodes);
+            this.gexfDocument.Graph.Nodes.AddRange(nodes);
         }
 
         public void SetNodesColors(Color primeColor, Color nonPrimeColor)
         {
-            foreach (var item in gexfDocument.Graph.Nodes)
+            foreach (var item in this.gexfDocument.Graph.Nodes)
             {
                 if (Utils.IsPrime(int.Parse(item.Id.ToString())))
                 {
@@ -36,21 +36,21 @@
 
         public void AddEdges(params GexfEdge[] edges)
         {
-            gexfDocument.Graph.Edges.AddRange(edges);
+            this.gexfDocument.Graph.Edges.AddRange(edges);
         }
 
         public void Save(string path)
         {
-            gexfDocument.Save(path);
+            this.gexfDocument.Save(path);
         }
 
         private void SetParameters()
         {
-            gexfDocument.Meta.LastModified = DateTimeOffset.Now;
-            gexfDocument.Meta.Creator = Environment.UserName;
-            gexfDocument.Graph.IdType = GexfIdType.Integer;
-            gexfDocument.Graph.Mode = GexfModeType.Static;
-            gexfDocument.Graph.DefaultedEdgeType = GexfEdgeType.Directed;
+            this.gexfDocument.Meta.LastModified = DateTimeOffset.Now;
+            this.gexfDocument.Meta.Creator = Environment.UserName;
+            this.gexfDocument.Graph.IdType = GexfIdType.Integer;
+            this.gexfDocument.Graph.Mode = GexfModeType.Static;
+            this.gexfDocument.Graph.DefaultedEdgeType = GexfEdgeType.Directed;
         }
     }
 }

@@ -5,7 +5,7 @@
 
     public class StartUp
     {
-        static void Main()
+        public static void Main()
         {
             Console.Write("Enter the number of nodes: ");
             var nodesCount = int.Parse(Console.ReadLine());
