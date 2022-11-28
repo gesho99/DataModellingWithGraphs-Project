@@ -20,7 +20,6 @@
             return factors;
         }
 
-        // Is this function ok, I saw in the net that the for loop starts from 3
         public static bool IsPrime(int number)
         {
             if (number == 1)
@@ -33,7 +32,7 @@
                 return true;
             }
 
-            var limit = Math.Ceiling(Math.Sqrt(number)); //hoisting the loop limit
+            var limit = Math.Ceiling(Math.Sqrt(number));
 
             for (int i = 2; i <= limit; ++i)
             {

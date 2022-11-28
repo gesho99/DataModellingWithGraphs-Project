@@ -9,7 +9,6 @@
         {
             Console.Write("Enter the number of nodes: ");
             var nodesCount = int.Parse(Console.ReadLine());
-            // TODO: Create class for graph instead of that dictionary
             var graph = new Dictionary<int, List<int>>();
 
             for (int i = 2; i <= nodesCount; i++)
@@ -27,6 +26,7 @@
 
             var gexfDocument = new GexfDocument();
             var gexfModel = new GexfModel(gexfDocument);
+
             var nodes = graph.Keys
                 .Select(key =>
                     new GexfNode(key)
@@ -38,7 +38,7 @@
             gexfModel.AddNodes(nodes);
             gexfModel.SetNodesColors(Color.Green, Color.Red);
 
-            int counter = 1;
+            var counter = 1;
             foreach (int node in graph.Keys)
             {
                 if (graph[node] != null)
@@ -54,7 +54,7 @@
 
             string path = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                "breweries.gexf");
+                "graph.gexf");
 
             gexfModel.Save(path);
         }
