@@ -10,24 +10,54 @@
         {
             Console.Write("Enter the number of nodes: ");
             var nodesCount = int.Parse(Console.ReadLine());
-            var graph = new Dictionary<int, List<int>>();
+            var graph = new Dictionary<string, List<string>>();
 
             // Load the workbook.
             SpreadsheetGear.IWorkbook workbook = SpreadsheetGear.Factory.GetWorkbook(@"mtx_correl_log_ret.csv");
             // Get a range of cells as an array of object[,].
             object[,] values = (object[,])workbook.Worksheets["in"].Cells["A1:Z26"].Value;
+            int[] whiteList = new int[3];
 
-            for (int i = 2; i <= nodesCount; i++)
+            decimal firstLargestNum = 0, secondLargestNum = 0, thirdLargestNum = 0;
+
+            for (int row = 1; row < values.GetLength(0); row++)
             {
-                if (Utils.IsPrime(i))
+                for (int col = 1; col < values.GetLength(0); col++)
                 {
-                    graph.Add(i, new List<int>());
+                    decimal value = decimal.Parse(values[row, col].ToString());
+                    if (value > thirdLargestNum)
+                    {
+                        if (value > secondLargestNum)
+                        {
+                            if (value > firstLargestNum)
+                            {
+                                thirdLargestNum = secondLargestNum;
+                                secondLargestNum = firstLargestNum;
+                                firstLargestNum = value;
+                                whiteList[0] = col;
+                            }
+                            else
+                            {
+                                thirdLargestNum = secondLargestNum;
+                                secondLargestNum = value;
+                                whiteList[1] = col;
+                            }
+                        }
+                        else
+                        {
+                            thirdLargestNum = value;
+                            whiteList[2] = col;
+                        }
+                    }
                 }
-                else
-                {
-                    var factors = Utils.CalculatePrimeFactors(i);
-                    graph.Add(i, factors);
-                }
+
+                List<string> companiesWithLargestNums = new List<string>();
+                companiesWithLargestNums.Add(values[0, whiteList[0]].ToString());
+                companiesWithLargestNums.Add(values[0, whiteList[1]].ToString());
+                companiesWithLargestNums.Add(values[0, whiteList[2]].ToString());
+
+                graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
+                
             }
 
             var gexfDocument = new GexfDocument();
@@ -44,7 +74,7 @@
             gexfModel.AddNodes(nodes);
             gexfModel.SetNodesColors(Color.Green, Color.Red);
 
-            var counter = 1;
+           /* var counter = 1;
             foreach (int node in graph.Keys)
             {
                 if (graph[node] != null)
@@ -56,7 +86,7 @@
                         counter++;
                     }
                 }
-            }
+            }*/
 
             string path = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
