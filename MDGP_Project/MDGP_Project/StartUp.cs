@@ -8,9 +8,8 @@
     {
         public static void Main()
         {
-            Console.Write("Enter the number of nodes: ");
-            var nodesCount = int.Parse(Console.ReadLine());
             var graph = new Dictionary<string, List<string>>();
+            var edges = new Dictionary<int, List<float>>();
 
             // Load the workbook.
             SpreadsheetGear.IWorkbook workbook = SpreadsheetGear.Factory.GetWorkbook(@"mtx_correl_log_ret.csv");
@@ -18,13 +17,14 @@
             object[,] values = (object[,])workbook.Worksheets["in"].Cells["A1:Z26"].Value;
             int[] whiteList = new int[3];
 
-            decimal firstLargestNum = 0, secondLargestNum = 0, thirdLargestNum = 0;
+            float firstLargestNum = 0, secondLargestNum = 0, thirdLargestNum = 0;
 
+            int counter = 1;
             for (int row = 1; row < values.GetLength(0); row++)
             {
                 for (int col = 1; col < values.GetLength(0); col++)
                 {
-                    decimal value = decimal.Parse(values[row, col].ToString());
+                    float value = float.Parse(values[row, col].ToString());
                     if (value > thirdLargestNum)
                     {
                         if (value > secondLargestNum)
@@ -57,7 +57,10 @@
                 companiesWithLargestNums.Add(values[0, whiteList[2]].ToString());
 
                 graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
-                
+                edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum, thirdLargestNum });
+
+                counter++;
+
             }
 
             var gexfDocument = new GexfDocument();
@@ -67,26 +70,32 @@
                 .Select(key =>
                     new GexfNode(key)
                     {
-                        Label = key.ToString()
+                        Label = key
                     })
                 .ToList();
 
             gexfModel.AddNodes(nodes);
-            gexfModel.SetNodesColors(Color.Green, Color.Red);
+            //gexfModel.SetNodesColors(Color.Green, Color.Red);
 
-           /* var counter = 1;
-            foreach (int node in graph.Keys)
+            int counterForEdgeID = 0;
+            counter = 1;
+            foreach (string node in graph.Keys)
             {
-                if (graph[node] != null)
+                foreach(var connections in graph.Values)
                 {
-                    foreach (int connection in graph[node])
+                    int counterForEdgesValues = 0;
+                    foreach(string connection in connections)
                     {
-                        gexfModel.AddEdges(new GexfEdge(counter, node, connection));
+                        GexfEdge edge = new GexfEdge(counterForEdgeID, node, connections.ElementAt(0));
+                        edge.Weight = edges.GetValueOrDefault(counter)[counterForEdgesValues];
+                        gexfModel.AddEdges(edge);
 
-                        counter++;
+                        counterForEdgeID++;
+                        counterForEdgesValues++;
                     }
                 }
-            }*/
+                counter++;
+            }
 
             string path = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
