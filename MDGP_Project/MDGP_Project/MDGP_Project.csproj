@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="gexf-dotnet" Version="1.0.0" />
+    <PackageReference Include="SpreadsheetGear" Version="8.7.15" />
   </ItemGroup>
 
 </Project>

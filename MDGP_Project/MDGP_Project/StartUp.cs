@@ -2,6 +2,7 @@
 {
     using System.Drawing;
     using Gexf;
+    using Microsoft.VisualBasic.FileIO;
 
     public class StartUp
     {
@@ -10,6 +11,11 @@
             Console.Write("Enter the number of nodes: ");
             var nodesCount = int.Parse(Console.ReadLine());
             var graph = new Dictionary<int, List<int>>();
+
+            // Load the workbook.
+            SpreadsheetGear.IWorkbook workbook = SpreadsheetGear.Factory.GetWorkbook(@"mtx_correl_log_ret.csv");
+            // Get a range of cells as an array of object[,].
+            object[,] values = (object[,])workbook.Worksheets["in"].Cells["A1:Z26"].Value;
 
             for (int i = 2; i <= nodesCount; i++)
             {
