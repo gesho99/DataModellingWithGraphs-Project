@@ -34,12 +34,15 @@
                                 thirdLargestNum = secondLargestNum;
                                 secondLargestNum = firstLargestNum;
                                 firstLargestNum = value;
+                                whiteList[2] = whiteList[1];
+                                whiteList[1] = whiteList[0];
                                 whiteList[0] = col;
                             }
                             else
                             {
                                 thirdLargestNum = secondLargestNum;
                                 secondLargestNum = value;
+                                whiteList[2] = whiteList[1];
                                 whiteList[1] = col;
                             }
                         }
@@ -61,6 +64,9 @@
 
                 counter++;
 
+                firstLargestNum = 0;
+                secondLargestNum = 0;
+                thirdLargestNum = 0;
             }
 
             var gexfDocument = new GexfDocument();
@@ -81,18 +87,16 @@
             counter = 1;
             foreach (string node in graph.Keys)
             {
-                foreach(var connections in graph.Values)
+                List<string> nodeValues = graph.GetValueOrDefault(node);
+                foreach (string nodeValue in nodeValues)
                 {
                     int counterForEdgesValues = 0;
-                    foreach(string connection in connections)
-                    {
-                        GexfEdge edge = new GexfEdge(counterForEdgeID, node, connections.ElementAt(0));
-                        edge.Weight = edges.GetValueOrDefault(counter)[counterForEdgesValues];
-                        gexfModel.AddEdges(edge);
+                    GexfEdge edge = new GexfEdge(counterForEdgeID, node, nodeValue);
+                    edge.Weight = edges.GetValueOrDefault(counter)[counterForEdgesValues];
+                    gexfModel.AddEdges(edge);
 
-                        counterForEdgeID++;
-                        counterForEdgesValues++;
-                    }
+                    counterForEdgeID++;
+                    counterForEdgesValues++;
                 }
                 counter++;
             }
