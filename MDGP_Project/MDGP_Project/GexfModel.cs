@@ -19,7 +19,7 @@
             this.gexfDocument.Graph.Nodes.AddRange(nodes);
         }
 
-        public void SetNodesColors(Color primeColor, Color nonPrimeColor)
+        /*public void SetNodesColors(Color primeColor, Color nonPrimeColor)
         {
             foreach (var item in this.gexfDocument.Graph.Nodes)
             {
@@ -33,7 +33,7 @@
                 }
             }
         }
-
+*/
         public void AddEdges(params GexfEdge[] edges)
         {
             this.gexfDocument.Graph.Edges.AddRange(edges);
@@ -50,7 +50,7 @@
             this.gexfDocument.Meta.Creator = Environment.UserName;
             this.gexfDocument.Graph.IdType = GexfIdType.Integer;
             this.gexfDocument.Graph.Mode = GexfModeType.Static;
-            this.gexfDocument.Graph.DefaultedEdgeType = GexfEdgeType.Directed;
+            this.gexfDocument.Graph.DefaultedEdgeType = GexfEdgeType.Undirected;
         }
     }
 }

@@ -26,6 +26,10 @@
                 for (int col = 1; col < values.GetLength(0); col++)
                 {
                     float value = float.Parse(values[row, col].ToString());
+                    if(value == 1)
+                    {
+                        continue;
+                    }
                     if (value > thirdLargestNum)
                     {
                         if (value > secondLargestNum)
