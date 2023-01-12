@@ -1,6 +1,7 @@
 ﻿namespace MDGP_Project
 {
     using System.Drawing;
+    using System.Numerics;
     using Gexf;
     using Microsoft.VisualBasic.FileIO;
 
@@ -88,11 +89,12 @@
             foreach (string node in graph.Keys)
             {
                 List<string> nodeValues = graph.GetValueOrDefault(node);
+                int counterForEdgesValues = 0;
                 foreach (string nodeValue in nodeValues)
                 {
-                    int counterForEdgesValues = 0;
                     GexfEdge edge = new GexfEdge(counterForEdgeID, node, nodeValue);
                     edge.Weight = edges.GetValueOrDefault(counter)[counterForEdgesValues];
+                    Type test = edge.Weight.GetType();
                     gexfModel.AddEdges(edge);
 
                     counterForEdgeID++;
