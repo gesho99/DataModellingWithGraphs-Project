@@ -1,117 +1,41 @@
 ﻿namespace MDGP_Project
 {
-    using System.Drawing;
-    using System.Numerics;
     using Gexf;
-    using Microsoft.VisualBasic.FileIO;
+    using SpreadsheetGear;
 
     public class StartUp
     {
         public static void Main()
         {
-            var graph = new Dictionary<string, List<string>>();
-            var edges = new Dictionary<int, List<float>>();
-
-            // Load the workbook.
-            SpreadsheetGear.IWorkbook workbook = SpreadsheetGear.Factory.GetWorkbook(@"mtx_correl_log_ret.csv");
-            // Get a range of cells as an array of object[,].
-            object[,] values = (object[,])workbook.Worksheets["in"].Cells["A1:Z26"].Value;
-            int[] whiteList = new int[3];
-
-            float firstLargestNum = 0, secondLargestNum = 0, thirdLargestNum = 0;
-
-            int counter = 1;
-            for (int row = 1; row < values.GetLength(0); row++)
+            // Load the workbooks
+            var workbooks = new List<IWorkbook>
             {
-                for (int col = 1; col < values.GetLength(0); col++)
-                {
-                    float value = float.Parse(values[row, col].ToString());
-                    if(value == 1)
-                    {
-                        continue;
-                    }
-                    if (value > thirdLargestNum)
-                    {
-                        if (value > secondLargestNum)
-                        {
-                            if (value > firstLargestNum)
-                            {
-                                thirdLargestNum = secondLargestNum;
-                                secondLargestNum = firstLargestNum;
-                                firstLargestNum = value;
-                                whiteList[2] = whiteList[1];
-                                whiteList[1] = whiteList[0];
-                                whiteList[0] = col;
-                            }
-                            else
-                            {
-                                thirdLargestNum = secondLargestNum;
-                                secondLargestNum = value;
-                                whiteList[2] = whiteList[1];
-                                whiteList[1] = col;
-                            }
-                        }
-                        else
-                        {
-                            thirdLargestNum = value;
-                            whiteList[2] = col;
-                        }
-                    }
-                }
+                Factory.GetWorkbook(@"mtx_correl_log_ret.csv"),
+                Factory.GetWorkbook(@"mtx_correl_ewm_vol.csv")
+            };
 
-                List<string> companiesWithLargestNums = new List<string>();
-                companiesWithLargestNums.Add(values[0, whiteList[0]].ToString());
-                companiesWithLargestNums.Add(values[0, whiteList[1]].ToString());
-                companiesWithLargestNums.Add(values[0, whiteList[2]].ToString());
-
-                graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
-                edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum, thirdLargestNum });
-
-                counter++;
-
-                firstLargestNum = 0;
-                secondLargestNum = 0;
-                thirdLargestNum = 0;
-            }
-
-            var gexfDocument = new GexfDocument();
-            var gexfModel = new GexfModel(gexfDocument);
-
-            var nodes = graph.Keys
-                .Select(key =>
-                    new GexfNode(key)
-                    {
-                        Label = key
-                    })
-                .ToList();
-
-            gexfModel.AddNodes(nodes);
-            //gexfModel.SetNodesColors(Color.Green, Color.Red);
-
-            int counterForEdgeID = 0;
-            counter = 1;
-            foreach (string node in graph.Keys)
+            // Process given workbooks
+            foreach (var workbook in workbooks)
             {
-                List<string> nodeValues = graph.GetValueOrDefault(node);
-                int counterForEdgesValues = 0;
-                foreach (string nodeValue in nodeValues)
-                {
-                    GexfEdge edge = new GexfEdge(counterForEdgeID, node, nodeValue);
-                    edge.Weight = edges.GetValueOrDefault(counter)[counterForEdgesValues];
-                    Type test = edge.Weight.GetType();
-                    gexfModel.AddEdges(edge);
+                // Get values from the workbooks
+                object[,] values = (object[,])workbook.Worksheets[0].Cells["A1:Z26"].Value;
 
-                    counterForEdgeID++;
-                    counterForEdgesValues++;
-                }
-                counter++;
+                // Execute algorithm on values from the workbooks
+                var resultedGraph = new ResultedGraph();
+                resultedGraph = resultedGraph.RunAlgorithm(values);
+
+                // Make visualization of each graph
+                var gexfDocument = new GexfDocument();
+                var gexfModel = new GexfModel(gexfDocument);
+                gexfModel = gexfModel.ProcessVisualization(gexfModel, resultedGraph);
+
+                // Save each graph on separate GEXF file
+                var path = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    $"graph_{workbook.Name.Replace(".csv", "")}.gexf");
+
+                gexfModel.Save(path);
             }
-
-            string path = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                "graph.gexf");
-
-            gexfModel.Save(path);
         }
     }
 }
