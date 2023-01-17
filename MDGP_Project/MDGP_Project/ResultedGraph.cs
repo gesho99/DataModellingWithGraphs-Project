@@ -29,11 +29,14 @@
                 for (var col = 1; col < values.GetLength(0); col++)
                 {
                     var value = float.Parse(values[row, col].ToString());
+
+                    // Skip the iteration if value is 1 (this is the diagonal value)
                     if (value == 1)
                     {
                         continue;
                     }
 
+                    // Calculate the first/second/third largest number
                     if (value > thirdLargestNum)
                     {
                         if (value > secondLargestNum)

@@ -18,11 +18,14 @@
             foreach (var workbook in workbooks)
             {
                 // Get values from the workbooks
-                object[,] values = (object[,])workbook.Worksheets[0].Cells["A1:Z26"].Value;
+                var values = (object[,])workbook.Worksheets[0].Cells["A1:Z26"].Value;
 
                 // Execute algorithm on values from the workbooks
                 var resultedGraph = new ResultedGraph();
                 resultedGraph = resultedGraph.RunAlgorithm(values);
+
+                // Kruskal Algorithm - Maximum spanning tree (Check for loops)
+                // TODO
 
                 // Make visualization of each graph
                 var gexfDocument = new GexfDocument();
