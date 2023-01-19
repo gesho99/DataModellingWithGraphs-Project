@@ -61,7 +61,8 @@
                 edgesWithWeights = sortedEdgesWithWeights.ToDictionary(x => x.Key, x => x.Value);
 
                 //constructing the maximum spanning tree
-                Dictionary<string, string> maximumSpanningTree = new Dictionary<string, string>();
+                List<Tuple<string, string>> maximumSpanningTree = new List<Tuple<string, string>>();
+                List<string> visitedNodes = new List<string>();
                 float lastWeight = 0.0f;
                 bool toAddValue = false;
                 foreach (var edge in edgesWithWeights.Keys)
@@ -73,18 +74,27 @@
                     }
 
                     //Here we should implement Deep First Search or Breadth First Search and to decide whether toAddValue or no
-
-                    //Nor the source nor the target are in the spanning tree, so add them
-                    if (toAddValue == true)
+                    
+                    if(!visitedNodes.Contains(edge.Source.ToString()) && visitedNodes.Contains(edge.Target.ToString()))
                     {
-                        try
-                        {
-                            maximumSpanningTree.Add(edge.Source.ToString(), edge.Target.ToString());
-                        }
-                        catch (System.ArgumentException e)
-                        {
-                            maximumSpanningTree.Add(edge.Target.ToString(), edge.Source.ToString());
-                        }
+                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Target.ToString(), edge.Source.ToString()));
+                        visitedNodes.Add(edge.Source.ToString());
+                    }
+                    else if(!visitedNodes.Contains(edge.Target.ToString()) && visitedNodes.Contains(edge.Source.ToString()))
+                    {
+                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                        visitedNodes.Add(edge.Target.ToString());
+                    }
+                    else if(!visitedNodes.Contains(edge.Source.ToString()) && !visitedNodes.Contains(edge.Target.ToString()))
+                    {
+                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                        visitedNodes.Add(edge.Source.ToString());
+                        visitedNodes.Add(edge.Target.ToString());
+                    }
+                    //If both nodes are already in the spanningTree??? dali source e vurzan s nqkoq ot destinaciite na destinaciqta (recursion?)
+                    else
+                    {
+                        continue;
                     }
 
                     lastWeight = (float)edge.Weight;
@@ -92,6 +102,7 @@
 
                 gexfDocument = new GexfDocument();
                 gexfModel = new GexfModel(gexfDocument);
+
                 gexfModel = gexfModel.ProcessVisualization(gexfModel, maximumSpanningTree, edgesWithWeights);
 
                 // Save each maximum spanning tree on separate GEXF file

@@ -80,22 +80,22 @@
             return gexfModel;
         }
 
-        public GexfModel ProcessVisualization(GexfModel gexfModel, Dictionary<string, string> graph, Dictionary<GexfEdge, float> edgesWithWeights)
+        public GexfModel ProcessVisualization(GexfModel gexfModel, List<Tuple<string, string>> graph, Dictionary<GexfEdge, float> edgesWithWeights)
         {
-            var nodes = graph.Keys
+            var nodes = graph
                 .Select(key =>
-                    new GexfNode(key)
-                    {
-                        Label = key
-                    })
+                new GexfNode(key.Item1)
+                {
+                    Label = key.Item1
+                })
                 .ToList();
 
             gexfModel.AddNodes(nodes);
 
             var counterForEdgeID = 0;
-            foreach (string node in graph.Keys)
+            foreach (var tuple in graph)
             {
-                GexfEdge edge = new GexfEdge(counterForEdgeID, node, graph.GetValueOrDefault(node));
+                GexfEdge edge = new GexfEdge(counterForEdgeID, tuple.Item1, tuple.Item2);
                 gexfModel.AddEdges(edge);
 
                 counterForEdgeID++;
