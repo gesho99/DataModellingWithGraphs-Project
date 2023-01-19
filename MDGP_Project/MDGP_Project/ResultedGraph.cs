@@ -73,6 +73,23 @@
                     values[0, whiteList[2]].ToString()
                 };
 
+                List<string> valuesToRemove = new List<string>();
+                foreach(var node in companiesWithLargestNums)
+                {
+                    if (graph.GetValueOrDefault(node) != null)
+                    {
+                        foreach (var dsa in graph.GetValueOrDefault(node))
+                        {
+                            if (dsa.Contains(values[row, 0].ToString()))
+                            {
+                                valuesToRemove.Add(node);
+                            }
+                        }
+                    }
+                }
+
+                valuesToRemove.ForEach(value => companiesWithLargestNums.Remove(value));
+
                 graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
                 edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum, thirdLargestNum });
 

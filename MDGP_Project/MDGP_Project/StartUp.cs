@@ -25,6 +25,7 @@
                 resultedGraph = resultedGraph.RunAlgorithm(values);
 
                 // Kruskal Algorithm - Maximum spanning tree (Check for loops)
+
                 // TODO
 
                 // Make visualization of each graph
