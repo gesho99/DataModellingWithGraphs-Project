@@ -80,6 +80,30 @@
             return gexfModel;
         }
 
+        public GexfModel ProcessVisualization(GexfModel gexfModel, Dictionary<string, string> graph, Dictionary<GexfEdge, float> edgesWithWeights)
+        {
+            var nodes = graph.Keys
+                .Select(key =>
+                    new GexfNode(key)
+                    {
+                        Label = key
+                    })
+                .ToList();
+
+            gexfModel.AddNodes(nodes);
+
+            var counterForEdgeID = 0;
+            foreach (string node in graph.Keys)
+            {
+                GexfEdge edge = new GexfEdge(counterForEdgeID, node, graph.GetValueOrDefault(node));
+                gexfModel.AddEdges(edge);
+
+                counterForEdgeID++;
+            }
+
+            return gexfModel;
+        }
+
         private void SetParameters()
         {
             this.gexfDocument.Meta.LastModified = DateTimeOffset.Now;
