@@ -80,7 +80,7 @@
             return gexfModel;
         }
 
-        public GexfModel ProcessVisualization(GexfModel gexfModel, List<Tuple<string, string>> graph, Dictionary<GexfEdge, float> edgesWithWeights)
+        public GexfModel ProcessVisualization(GexfModel gexfModel, List<Tuple<string, string, GexfFloat>> graph, Dictionary<GexfEdge, float> edgesWithWeights)
         {
             var leftNodes = graph
                 .Select(key =>
@@ -110,6 +110,7 @@
             foreach (var tuple in graph)
             {
                 GexfEdge edge = new GexfEdge(counterForEdgeID, tuple.Item1, tuple.Item2);
+                edge.Weight = tuple.Item3;
                 gexfModel.AddEdges(edge);
 
                 counterForEdgeID++;

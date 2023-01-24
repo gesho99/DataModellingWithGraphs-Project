@@ -60,9 +60,8 @@
 
                 edgesWithWeights = sortedEdgesWithWeights.ToDictionary(x => x.Key, x => x.Value);
 
-                List<Tuple<string, string>> maximumSpanningTree = new List<Tuple<string, string>>();
+                List<Tuple<string, string, GexfFloat>> maximumSpanningTree = new List<Tuple<string, string, GexfFloat>>();
                 List<string> visitedNodes = new List<string>();
-                bool toAddValue = false;
                 List<string> destinations = new List<string>();
 
                 int counterForDebbuging = 0;
@@ -71,17 +70,17 @@
                     //Checking whether one of the elements is already visited
                     if((!visitedNodes.Contains(edge.Source.ToString())) && visitedNodes.Contains(edge.Target.ToString()))
                     {
-                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Target.ToString(), edge.Source.ToString()));
+                        maximumSpanningTree.Add(new Tuple<string, string, GexfFloat>(edge.Target.ToString(), edge.Source.ToString(), edge.Weight));
                         visitedNodes.Add(edge.Source.ToString());
                     }
                     else if((!visitedNodes.Contains(edge.Target.ToString())) && visitedNodes.Contains(edge.Source.ToString()))
                     {
-                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                        maximumSpanningTree.Add(new Tuple<string, string, GexfFloat>(edge.Source.ToString(), edge.Target.ToString(), edge.Weight));
                         visitedNodes.Add(edge.Target.ToString());
                     }
                     else if((!visitedNodes.Contains(edge.Source.ToString())) && (!visitedNodes.Contains(edge.Target.ToString())))
                     {
-                        maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                        maximumSpanningTree.Add(new Tuple<string, string, GexfFloat> (edge.Source.ToString(), edge.Target.ToString(), edge.Weight));
                         visitedNodes.Add(edge.Source.ToString());
                         visitedNodes.Add(edge.Target.ToString());
                     }
@@ -92,7 +91,7 @@
 
                         if(!destinations.Contains(edge.Target.ToString()))
                         {
-                            maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                            maximumSpanningTree.Add(new Tuple<string, string, GexfFloat>(edge.Source.ToString(), edge.Target.ToString(), edge.Weight));
                         }
 
                         destinations.Clear();
@@ -116,10 +115,10 @@
         }
 
         //Recursive function to get all the direct and indirect destinations of a node
-        static void GetAllDestinationDestinations(List<Tuple<string, string>> maximumSpanningTree, string node, List<string> destinations)
+        static void GetAllDestinationDestinations(List<Tuple<string, string, GexfFloat>> maximumSpanningTree, string node, List<string> destinations)
         {
             //Getting all the connections of the node
-            List<Tuple<string, string>> edges = maximumSpanningTree.FindAll(nd => nd.Item1 == node || nd.Item2 == node);
+            List<Tuple<string, string, GexfFloat>> edges = maximumSpanningTree.FindAll(nd => nd.Item1 == node || nd.Item2 == node);
 
             //If there are no connections we return
             if(edges.Count == 0)
