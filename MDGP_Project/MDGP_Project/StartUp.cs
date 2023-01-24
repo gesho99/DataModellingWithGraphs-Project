@@ -60,24 +60,15 @@
 
                 edgesWithWeights = sortedEdgesWithWeights.ToDictionary(x => x.Key, x => x.Value);
 
-                //constructing the maximum spanning tree
                 List<Tuple<string, string>> maximumSpanningTree = new List<Tuple<string, string>>();
                 List<string> visitedNodes = new List<string>();
-                float lastWeight = 0.0f;
                 bool toAddValue = false;
                 List<string> destinations = new List<string>();
 
                 int counterForDebbuging = 0;
                 foreach (var edge in edgesWithWeights.Keys)
-                {
-/*                    //Checking whether the weight is equal to the weight before, if yes -> skipping
-                    if((float)edgesWithWeights.GetValueOrDefault(edge) == lastWeight)
-                    {
-                        continue;
-                    }*/
-
-                    //Here we should implement Deep First Search or Breadth First Search and to decide whether toAddValue or no
-                    
+                {             
+                    //Checking whether one of the elements is already visited
                     if((!visitedNodes.Contains(edge.Source.ToString())) && visitedNodes.Contains(edge.Target.ToString()))
                     {
                         maximumSpanningTree.Add(new Tuple<string, string>(edge.Target.ToString(), edge.Source.ToString()));
@@ -94,7 +85,7 @@
                         visitedNodes.Add(edge.Source.ToString());
                         visitedNodes.Add(edge.Target.ToString());
                     }
-                    //If both nodes are already in the spanningTree??? dali source e vurzan s nqkoq ot destinaciite na destinaciqta (recursion?)
+                    //Checking if both of the elemenst are alredy visited - if yes - are they connected to eachother through other nodes?
                     else
                     {
                         GetAllDestinationDestinations(maximumSpanningTree, edge.Source.ToString(), destinations);
@@ -106,8 +97,6 @@
 
                         destinations.Clear();
                     }
-
-                    lastWeight = (float)edge.Weight;
 
                     counterForDebbuging++;
                 }
@@ -126,6 +115,7 @@
             }
         }
 
+        //Recursive function to get all the direct and indirect destinations of a node
         static void GetAllDestinationDestinations(List<Tuple<string, string>> maximumSpanningTree, string node, List<string> destinations)
         {
             List<Tuple<string, string>> edges = maximumSpanningTree.FindAll(nd => nd.Item1 == node || nd.Item2 == node);
