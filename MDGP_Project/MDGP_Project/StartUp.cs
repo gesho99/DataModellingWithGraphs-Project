@@ -118,15 +118,19 @@
         //Recursive function to get all the direct and indirect destinations of a node
         static void GetAllDestinationDestinations(List<Tuple<string, string>> maximumSpanningTree, string node, List<string> destinations)
         {
+            //Getting all the connections of the node
             List<Tuple<string, string>> edges = maximumSpanningTree.FindAll(nd => nd.Item1 == node || nd.Item2 == node);
 
+            //If there are no connections we return
             if(edges.Count == 0)
             {
                 return;
             }
 
+            //Foreach connection
             foreach(var edge in edges)
             {
+                //If the node is on the right side of the connection
                 if(edge.Item1 == node)
                 {
                     if(destinations.Contains(edge.Item2))
@@ -134,8 +138,10 @@
                         continue;
                     }
                     destinations.Add(edge.Item2);
+                    //Get the connections of the node's destination
                     GetAllDestinationDestinations(maximumSpanningTree, edge.Item2, destinations);
                 }
+                //If the node is on the left side of the connection
                 else if(edge.Item2 == node)
                 {
                     if (destinations.Contains(edge.Item1))
@@ -143,6 +149,7 @@
                         continue;
                     }
                     destinations.Add(edge.Item1);
+                    //Get the connections of the node's destination
                     GetAllDestinationDestinations(maximumSpanningTree, edge.Item1, destinations);
                 }
             }
