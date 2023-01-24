@@ -82,7 +82,7 @@
 
         public GexfModel ProcessVisualization(GexfModel gexfModel, List<Tuple<string, string>> graph, Dictionary<GexfEdge, float> edgesWithWeights)
         {
-            var nodes = graph
+            var leftNodes = graph
                 .Select(key =>
                 new GexfNode(key.Item1)
                 {
@@ -90,7 +90,21 @@
                 })
                 .ToList();
 
-            gexfModel.AddNodes(nodes);
+            var rightNodes = graph
+                .Select(key =>
+                new GexfNode(key.Item2)
+                {
+                    Label = key.Item2
+                })
+                .ToList();
+
+            leftNodes.AddRange(rightNodes);
+
+            List<GexfNode> allNodes = leftNodes;
+
+            allNodes = allNodes.Distinct().ToList();
+
+            gexfModel.AddNodes(allNodes);
 
             var counterForEdgeID = 0;
             foreach (var tuple in graph)

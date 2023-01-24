@@ -26,7 +26,7 @@
             var counter = 1;
             for (var row = 1; row < values.GetLength(0); row++)
             {
-                for (var col = 1; col < values.GetLength(0); col++)
+                for (var col = 1; col < values.GetLength(1); col++)
                 {
                     var value = float.Parse(values[row, col].ToString());
 
@@ -74,7 +74,7 @@
                 };
 
                 List<string> valuesToRemove = new List<string>();
-                foreach(var node in companiesWithLargestNums)
+                foreach (var node in companiesWithLargestNums)
                 {
                     if (graph.GetValueOrDefault(node) != null)
                     {
@@ -88,10 +88,54 @@
                     }
                 }
 
+                foreach (var element in valuesToRemove)
+                {
+                    int index = companiesWithLargestNums.IndexOf(element);
+                    if (index == 0)
+                    {
+                        firstLargestNum = 0;
+                    }
+                    else if (index == 1)
+                    {
+                        secondLargestNum = 0;
+                    }
+                    else if (index == 2)
+                    {
+                        thirdLargestNum = 0;
+                    }
+                }
                 valuesToRemove.ForEach(value => companiesWithLargestNums.Remove(value));
 
                 graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
-                edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum, thirdLargestNum });
+
+                if (firstLargestNum != 0 && secondLargestNum != 0 && thirdLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum, thirdLargestNum });
+                }
+                else if (firstLargestNum == 0 && secondLargestNum != 0 && thirdLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { secondLargestNum, thirdLargestNum });
+                }
+                else if (secondLargestNum == 0 && firstLargestNum != 0 && thirdLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { firstLargestNum, thirdLargestNum });
+                }
+                else if (thirdLargestNum == 0 && firstLargestNum != 0 && secondLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { firstLargestNum, secondLargestNum });
+                }
+                else if (firstLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { firstLargestNum });
+                }
+                else if (secondLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { secondLargestNum });
+                }
+                else if(thirdLargestNum != 0)
+                {
+                    edges.Add(counter, new List<float> { thirdLargestNum });
+                }
 
                 counter++;
 

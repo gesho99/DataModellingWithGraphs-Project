@@ -65,27 +65,30 @@
                 List<string> visitedNodes = new List<string>();
                 float lastWeight = 0.0f;
                 bool toAddValue = false;
+                List<string> destinations = new List<string>();
+
+                int counterForDebbuging = 0;
                 foreach (var edge in edgesWithWeights.Keys)
                 {
-                    //Checking whether the weight is equal to the weight before, if yes -> skipping
+/*                    //Checking whether the weight is equal to the weight before, if yes -> skipping
                     if((float)edgesWithWeights.GetValueOrDefault(edge) == lastWeight)
                     {
                         continue;
-                    }
+                    }*/
 
                     //Here we should implement Deep First Search or Breadth First Search and to decide whether toAddValue or no
                     
-                    if(!visitedNodes.Contains(edge.Source.ToString()) && visitedNodes.Contains(edge.Target.ToString()))
+                    if((!visitedNodes.Contains(edge.Source.ToString())) && visitedNodes.Contains(edge.Target.ToString()))
                     {
                         maximumSpanningTree.Add(new Tuple<string, string>(edge.Target.ToString(), edge.Source.ToString()));
                         visitedNodes.Add(edge.Source.ToString());
                     }
-                    else if(!visitedNodes.Contains(edge.Target.ToString()) && visitedNodes.Contains(edge.Source.ToString()))
+                    else if((!visitedNodes.Contains(edge.Target.ToString())) && visitedNodes.Contains(edge.Source.ToString()))
                     {
                         maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
                         visitedNodes.Add(edge.Target.ToString());
                     }
-                    else if(!visitedNodes.Contains(edge.Source.ToString()) && !visitedNodes.Contains(edge.Target.ToString()))
+                    else if((!visitedNodes.Contains(edge.Source.ToString())) && (!visitedNodes.Contains(edge.Target.ToString())))
                     {
                         maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
                         visitedNodes.Add(edge.Source.ToString());
@@ -94,10 +97,19 @@
                     //If both nodes are already in the spanningTree??? dali source e vurzan s nqkoq ot destinaciite na destinaciqta (recursion?)
                     else
                     {
-                        continue;
+                        GetAllDestinationDestinations(maximumSpanningTree, edge.Source.ToString(), destinations);
+
+                        if(!destinations.Contains(edge.Target.ToString()))
+                        {
+                            maximumSpanningTree.Add(new Tuple<string, string>(edge.Source.ToString(), edge.Target.ToString()));
+                        }
+
+                        destinations.Clear();
                     }
 
                     lastWeight = (float)edge.Weight;
+
+                    counterForDebbuging++;
                 }
 
                 gexfDocument = new GexfDocument();
@@ -111,6 +123,38 @@
                     $"maximum_spanning_tree_{workbook.Name.Replace(".csv", "")}.gexf");
 
                 gexfModel.Save(path);
+            }
+        }
+
+        static void GetAllDestinationDestinations(List<Tuple<string, string>> maximumSpanningTree, string node, List<string> destinations)
+        {
+            List<Tuple<string, string>> edges = maximumSpanningTree.FindAll(nd => nd.Item1 == node || nd.Item2 == node);
+
+            if(edges.Count == 0)
+            {
+                return;
+            }
+
+            foreach(var edge in edges)
+            {
+                if(edge.Item1 == node)
+                {
+                    if(destinations.Contains(edge.Item2))
+                    {
+                        continue;
+                    }
+                    destinations.Add(edge.Item2);
+                    GetAllDestinationDestinations(maximumSpanningTree, edge.Item2, destinations);
+                }
+                else if(edge.Item2 == node)
+                {
+                    if (destinations.Contains(edge.Item1))
+                    {
+                        continue;
+                    }
+                    destinations.Add(edge.Item1);
+                    GetAllDestinationDestinations(maximumSpanningTree, edge.Item1, destinations);
+                }
             }
         }
     }
