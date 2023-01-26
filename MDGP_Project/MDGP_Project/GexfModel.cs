@@ -1,8 +1,6 @@
 ﻿namespace MDGP_Project
 {
-    using System.Drawing;
     using Gexf;
-    using Gexf.Visualization;
 
     public class GexfModel
     {
@@ -19,21 +17,6 @@
             this.gexfDocument.Graph.Nodes.AddRange(nodes);
         }
 
-        /*public void SetNodesColors(Color primeColor, Color nonPrimeColor)
-        {
-            foreach (var item in this.gexfDocument.Graph.Nodes)
-            {
-                if (Utils.IsPrime(int.Parse(item.Id.ToString())))
-                {
-                    item.Color(primeColor);
-                }
-                else
-                {
-                    item.Color(nonPrimeColor);
-                }
-            }
-        }
-*/
         public void AddEdges(params GexfEdge[] edges)
         {
             this.gexfDocument.Graph.Edges.AddRange(edges);
@@ -55,7 +38,6 @@
                 .ToList();
 
             gexfModel.AddNodes(nodes);
-            // gexfModel.SetNodesColors(Color.Green, Color.Red);
 
             var counterForEdgeID = 0;
             var counter = 1;
@@ -66,7 +48,7 @@
 
                 foreach (string nodeValue in nodeValues)
                 {
-                    GexfEdge edge = new GexfEdge(counterForEdgeID, node, nodeValue);
+                    var edge = new GexfEdge(counterForEdgeID, node, nodeValue);
                     edge.Weight = resultedGraph.Edges.GetValueOrDefault(counter)[counterForEdgesValues];
                     gexfModel.AddEdges(edge);
 
@@ -80,7 +62,10 @@
             return gexfModel;
         }
 
-        public GexfModel ProcessVisualization(GexfModel gexfModel, List<Tuple<string, string, GexfFloat>> graph, Dictionary<GexfEdge, float> edgesWithWeights)
+        public GexfModel ProcessVisualization(
+            GexfModel gexfModel,
+            List<Tuple<string, string, GexfFloat>> graph,
+            Dictionary<GexfEdge, float> edgesWithWeights)
         {
             var leftNodes = graph
                 .Select(key =>
@@ -109,7 +94,7 @@
             var counterForEdgeID = 0;
             foreach (var tuple in graph)
             {
-                GexfEdge edge = new GexfEdge(counterForEdgeID, tuple.Item1, tuple.Item2);
+                var edge = new GexfEdge(counterForEdgeID, tuple.Item1, tuple.Item2);
                 edge.Weight = tuple.Item3;
                 gexfModel.AddEdges(edge);
 
