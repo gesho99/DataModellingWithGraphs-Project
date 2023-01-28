@@ -84,7 +84,7 @@
                     values,
                     row);
 
-                graph.Add(values[row, 0]?.ToString(), companiesWithLargestNums);
+                graph.Add(values[row, 0].ToString(), companiesWithLargestNums);
 
                 // Checking which connection we removed in order to reconstruct the edges
                 this.ReconstructEdges(edges, firstLargestNum, secondLargestNum, thirdLargestNum, counter);
@@ -158,7 +158,7 @@
                 {
                     foreach (var dsa in graph.GetValueOrDefault(node))
                     {
-                        // Ff there is already such connection between two nodes, do not add it again
+                        // If there is already such connection between two nodes, do not add it again
                         if (dsa.Contains(values[row, 0].ToString()))
                         {
                             valuesToRemove.Add(node);
