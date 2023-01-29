@@ -1,61 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.2draft/viz" version="1.2">
-  <meta lastmodifieddate="2023-01-28">
+  <meta lastmodifieddate="2023-01-29">
     <creator>Stanislav</creator>
   </meta>
   <graph mode="static" defaultedgetype="undirected" idtype="integer">
     <nodes count="25">
-      <node id="NFLX" label="NFLX" type="string" />
-      <node id="EA" label="EA" type="string" />
-      <node id="BLK" label="BLK" type="string" />
-      <node id="CRM" label="CRM" type="string" />
-      <node id="QCOM" label="QCOM" type="string" />
-      <node id="CMG" label="CMG" type="string" />
-      <node id="INTC" label="INTC" type="string" />
-      <node id="CME" label="CME" type="string" />
-      <node id="NOC" label="NOC" type="string" />
-      <node id="HPE" label="HPE" type="string" />
-      <node id="DXC" label="DXC" type="string" />
-      <node id="NVDA" label="NVDA" type="string" />
-      <node id="IBM" label="IBM" type="string" />
-      <node id="GD" label="GD" type="string" />
-      <node id="FB" label="FB" type="string" />
-      <node id="NDAQ" label="NDAQ" type="string" />
-      <node id="GOOGL" label="GOOGL" type="string" />
-      <node id="AAPL" label="AAPL" type="string" />
-      <node id="MSFT" label="MSFT" type="string" />
       <node id="GOOG" label="GOOG" type="string" />
       <node id="BAC" label="BAC" type="string" />
-      <node id="GS" label="GS" type="string" />
-      <node id="MCD" label="MCD" type="string" />
-      <node id="KO" label="KO" type="string" />
       <node id="JPM" label="JPM" type="string" />
+      <node id="GOOGL" label="GOOGL" type="string" />
+      <node id="MSFT" label="MSFT" type="string" />
+      <node id="BLK" label="BLK" type="string" />
+      <node id="CME" label="CME" type="string" />
+      <node id="MCD" label="MCD" type="string" />
+      <node id="GD" label="GD" type="string" />
+      <node id="NVDA" label="NVDA" type="string" />
+      <node id="IBM" label="IBM" type="string" />
+      <node id="NDAQ" label="NDAQ" type="string" />
+      <node id="FB" label="FB" type="string" />
+      <node id="GS" label="GS" type="string" />
+      <node id="AAPL" label="AAPL" type="string" />
+      <node id="DXC" label="DXC" type="string" />
+      <node id="KO" label="KO" type="string" />
+      <node id="CMG" label="CMG" type="string" />
+      <node id="INTC" label="INTC" type="string" />
+      <node id="HPE" label="HPE" type="string" />
+      <node id="NOC" label="NOC" type="string" />
+      <node id="QCOM" label="QCOM" type="string" />
+      <node id="CRM" label="CRM" type="string" />
+      <node id="EA" label="EA" type="string" />
+      <node id="NFLX" label="NFLX" type="string" />
     </nodes>
     <edges count="24">
-      <edge id="0" source="NFLX" target="EA" weight="0.481841832399368" />
-      <edge id="1" source="NFLX" target="CRM" weight="0.493624031543732" />
-      <edge id="2" source="NFLX" target="FB" weight="0.50313800573349" />
-      <edge id="3" source="EA" target="BLK" weight="0.580422878265381" />
-      <edge id="4" source="BLK" target="CMG" weight="0.593995094299316" />
-      <edge id="5" source="EA" target="CME" weight="0.603019893169403" />
-      <edge id="6" source="EA" target="NDAQ" weight="0.603174269199371" />
-      <edge id="7" source="CRM" target="GOOGL" weight="0.608259975910187" />
-      <edge id="8" source="QCOM" target="AAPL" weight="0.615453004837036" />
-      <edge id="9" source="QCOM" target="NVDA" weight="0.618502616882324" />
-      <edge id="10" source="CMG" target="NVDA" weight="0.620696306228638" />
-      <edge id="11" source="CRM" target="MSFT" weight="0.622559368610382" />
-      <edge id="12" source="INTC" target="GOOG" weight="0.627203226089478" />
-      <edge id="13" source="INTC" target="GOOGL" weight="0.639862239360809" />
-      <edge id="14" source="CME" target="NOC" weight="0.65166825056076" />
-      <edge id="15" source="NOC" target="GD" weight="0.652278304100037" />
-      <edge id="16" source="HPE" target="BAC" weight="0.681532919406891" />
-      <edge id="17" source="HPE" target="GD" weight="0.681843519210815" />
-      <edge id="18" source="HPE" target="IBM" weight="0.685945272445679" />
-      <edge id="19" source="DXC" target="GS" weight="0.697232007980347" />
-      <edge id="20" source="DXC" target="BAC" weight="0.705049932003021" />
-      <edge id="21" source="NVDA" target="MCD" weight="0.708473682403564" />
-      <edge id="22" source="IBM" target="KO" weight="0.714217066764832" />
-      <edge id="23" source="GD" target="JPM" weight="0.745061814785004" />
+      <edge id="0" source="GOOG" target="GOOGL" weight="0.996094703674316" />
+      <edge id="1" source="BAC" target="JPM" weight="0.927648723125458" />
+      <edge id="2" source="JPM" target="GS" weight="0.838169455528259" />
+      <edge id="3" source="GOOGL" target="MSFT" weight="0.828906238079071" />
+      <edge id="4" source="MSFT" target="AAPL" weight="0.800117075443268" />
+      <edge id="5" source="MSFT" target="NVDA" weight="0.79873389005661" />
+      <edge id="6" source="GOOG" target="FB" weight="0.789906740188599" />
+      <edge id="7" source="BLK" target="NDAQ" weight="0.788662672042847" />
+      <edge id="8" source="CME" target="MCD" weight="0.756476879119873" />
+      <edge id="9" source="CME" target="NDAQ" weight="0.754961550235748" />
+      <edge id="10" source="MCD" target="DXC" weight="0.750250637531281" />
+      <edge id="11" source="JPM" target="GD" weight="0.745061814785004" />
+      <edge id="12" source="GD" target="KO" weight="0.741255640983582" />
+      <edge id="13" source="CME" target="GD" weight="0.741049647331238" />
+      <edge id="14" source="BLK" target="IBM" weight="0.725272715091705" />
+      <edge id="15" source="MCD" target="CMG" weight="0.721682548522949" />
+      <edge id="16" source="NVDA" target="MCD" weight="0.708473682403564" />
+      <edge id="17" source="MSFT" target="INTC" weight="0.69991672039032" />
+      <edge id="18" source="IBM" target="HPE" weight="0.685945272445679" />
+      <edge id="19" source="BLK" target="NOC" weight="0.673805773258209" />
+      <edge id="20" source="MSFT" target="QCOM" weight="0.663879930973053" />
+      <edge id="21" source="MSFT" target="CRM" weight="0.622559368610382" />
+      <edge id="22" source="NDAQ" target="EA" weight="0.603174269199371" />
+      <edge id="23" source="FB" target="NFLX" weight="0.50313800573349" />
     </edges>
   </graph>
 </gexf>

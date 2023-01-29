@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.2draft/viz" version="1.2">
-  <meta lastmodifieddate="2023-01-28">
+  <meta lastmodifieddate="2023-01-29">
     <creator>Stanislav</creator>
   </meta>
   <graph mode="static" defaultedgetype="undirected" idtype="integer">
@@ -63,9 +63,9 @@
       <edge id="28" source="GD" target="KO" weight="0.741255640983582" />
       <edge id="29" source="GOOG" target="GOOGL" weight="0.996094703674316" />
       <edge id="30" source="GOOG" target="MSFT" weight="0.822794556617737" />
-      <edge id="31" source="GOOGL" target="MSFT" weight="0.996094703674316" />
+      <edge id="31" source="GOOGL" target="MSFT" weight="0.828906238079071" />
       <edge id="32" source="GS" target="JPM" weight="0.838169455528259" />
-      <edge id="33" source="GS" target="GD" weight="0.827865898609161" />
+      <edge id="33" source="GS" target="GD" weight="0.72164249420166" />
       <edge id="34" source="HPE" target="IBM" weight="0.685945272445679" />
       <edge id="35" source="HPE" target="GD" weight="0.681843519210815" />
       <edge id="36" source="HPE" target="BAC" weight="0.681532919406891" />
@@ -75,8 +75,8 @@
       <edge id="40" source="INTC" target="MSFT" weight="0.69991672039032" />
       <edge id="41" source="INTC" target="GOOGL" weight="0.639862239360809" />
       <edge id="42" source="INTC" target="GOOG" weight="0.627203226089478" />
-      <edge id="43" source="KO" target="NDAQ" weight="0.741255640983582" />
-      <edge id="44" source="NDAQ" target="MCD" weight="0.788662672042847" />
+      <edge id="43" source="KO" target="NDAQ" weight="0.722316801548004" />
+      <edge id="44" source="NDAQ" target="MCD" weight="0.738038182258606" />
       <edge id="45" source="NFLX" target="FB" weight="0.50313800573349" />
       <edge id="46" source="NFLX" target="CRM" weight="0.493624031543732" />
       <edge id="47" source="NFLX" target="EA" weight="0.481841832399368" />
