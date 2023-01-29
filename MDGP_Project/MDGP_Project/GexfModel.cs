@@ -64,8 +64,7 @@
 
         public GexfModel ProcessVisualization(
             GexfModel gexfModel,
-            List<Tuple<string, string, GexfFloat>> graph,
-            Dictionary<GexfEdge, float> edgesWithWeights)
+            List<Tuple<string, string, GexfFloat>> graph)
         {
             var leftNodes = graph
                 .Select(key =>

@@ -2,6 +2,7 @@
 {
     using Gexf;
     using SpreadsheetGear;
+    using System.Collections.Generic;
 
     public class StartUp
     {
@@ -36,12 +37,12 @@
 
                     // Generate maximum spanning tree
                     var spanningTree = new SpanningTree();
-                    spanningTree = spanningTree.GenerateSpanningTree(gexfDocument);
+                    List <Tuple<string, string, GexfFloat>> maximumSpanningTree = spanningTree.GenerateSpanningTree(gexfDocument);
 
                     gexfDocument = new GexfDocument();
                     gexfModel = new GexfModel(gexfDocument);
 
-                    gexfModel = gexfModel.ProcessVisualization(gexfModel, spanningTree.MaximumSpanningTree, spanningTree.EdgesWithWeights);
+                    gexfModel = gexfModel.ProcessVisualization(gexfModel, maximumSpanningTree);
 
                     // Save each maximum spanning tree on separate GEXF file; point 6 and 7 from project requirements
                     Utils.SaveGraph("maximum_spanning_tree", workbook.Name, gexfModel);

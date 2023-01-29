@@ -78,9 +78,9 @@
                 companiesWithLargestNums = this.RemoveDuplicatedConnections(
                     companiesWithLargestNums,
                     graph,
-                    firstLargestNum,
-                    secondLargestNum,
-                    thirdLargestNum,
+                    ref firstLargestNum,
+                    ref secondLargestNum,
+                    ref thirdLargestNum,
                     values,
                     row);
 
@@ -145,9 +145,9 @@
         private List<string> RemoveDuplicatedConnections(
             List<string> companiesWithLargestNums,
             Dictionary<string, List<string>> graph,
-            float firstLargestNum,
-            float secondLargestNum,
-            float thirdLargestNum,
+            ref float firstLargestNum,
+            ref float secondLargestNum,
+            ref float thirdLargestNum,
             object[,] values,
             int row)
         {
@@ -156,10 +156,10 @@
             {
                 if (graph.GetValueOrDefault(node) != null)
                 {
-                    foreach (var dsa in graph.GetValueOrDefault(node))
+                    foreach (var connection in graph.GetValueOrDefault(node))
                     {
                         // If there is already such connection between two nodes, do not add it again
-                        if (dsa.Contains(values[row, 0].ToString()))
+                        if (connection.Contains(values[row, 0].ToString()))
                         {
                             valuesToRemove.Add(node);
                         }

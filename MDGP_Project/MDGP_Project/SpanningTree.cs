@@ -7,18 +7,8 @@
 
     public class SpanningTree
     {
-        public SpanningTree()
-        {
-            this.EdgesWithWeights = new Dictionary<GexfEdge, float>();
-            this.MaximumSpanningTree = new List<Tuple<string, string, GexfFloat>>();
-        }
-
-        public Dictionary<GexfEdge, float> EdgesWithWeights { get; private set; }
-
-        public List<Tuple<string, string, GexfFloat>> MaximumSpanningTree { get; private set; }
-
         // Kruskal Algorithm - Maximum spanning tree
-        public SpanningTree GenerateSpanningTree(GexfDocument gexfDocument)
+        public List<Tuple<string, string, GexfFloat>> GenerateSpanningTree(GexfDocument gexfDocument)
         {
             var edgesWithWeights = new Dictionary<GexfEdge, float>();
 
@@ -28,7 +18,7 @@
             }
 
             // Sorting the dictionary
-            edgesWithWeights = edgesWithWeights.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            edgesWithWeights = edgesWithWeights.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
             var maximumSpanningTree = new List<Tuple<string, string, GexfFloat>>();
             var visitedNodes = new List<string>();
@@ -67,13 +57,7 @@
                 }
             }
 
-            var spanningTree = new SpanningTree
-            {
-                EdgesWithWeights = edgesWithWeights,
-                MaximumSpanningTree = maximumSpanningTree
-            };
-
-            return spanningTree;
+            return maximumSpanningTree;
         }
     }
 }
